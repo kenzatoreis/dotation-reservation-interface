@@ -1,0 +1,112 @@
+<form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+  <!-- Type Client -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Type Clients <span class="text-red-600">*</span></label>
+    <select class="w-full border rounded px-3 py-2" formControlName="typeClient">
+      <option value="">Sélectionner</option>
+      <option value="resident_marocain">Residents marocains</option>
+      <option value="resident_etranger">Residents etrangers</option>
+      <option value="mre">MRE marocains résidants à l’étranger</option>
+      <option value="non_resident">Non residents etrangers</option>
+    </select>
+  </div>
+
+  <!-- Type Pièce -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Type Pièce d'identité <span class="text-red-600">*</span></label>
+    <select class="w-full border rounded px-3 py-2" formControlName="typePi">
+      <option value="CIN">CIN</option>
+      <option value="CARTE_SEJOUR">Carte Séjour</option>
+    </select>
+  </div>
+
+  <!-- Numéro PI -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de pièce <span class="text-red-600">*</span></label>
+    <input class="w-full border rounded px-3 py-2" formControlName="numPi" />
+  </div>
+
+  <!-- Nom -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Nom <span class="text-red-600">*</span></label>
+    <input class="w-full border rounded px-3 py-2" formControlName="nom" />
+  </div>
+
+  <!-- Prénom -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Prénom <span class="text-red-600">*</span></label>
+    <input class="w-full border rounded px-3 py-2" formControlName="prenom" />
+  </div>
+
+  <!-- Numéro Passeport -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de passeport <span class="text-red-600">*</span></label>
+    <input class="w-full border rounded px-3 py-2" formControlName="numPasseport" />
+    <p *ngIf="form.get('numPasseport')?.touched && form.get('numPasseport')?.invalid" class="text-red-600 text-sm mt-1">
+      <span *ngIf="form.get('numPasseport')?.errors?.['required']">Ce champ est requis.</span>
+      <span *ngIf="form.get('numPasseport')?.errors?.['pattern']">Format invalide (lettres et chiffres, min 3 caractères).</span>
+    </p>
+  </div>
+
+  <!-- Disponible OC -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Disponible OC <span class="text-red-600">*</span></label>
+    <input type="text" class="w-full border rounded px-3 py-2" formControlName="disponibleOc" />
+    <p *ngIf="form.get('disponibleOc')?.touched && form.get('disponibleOc')?.invalid" class="text-red-600 text-sm mt-1">
+      <span *ngIf="form.get('disponibleOc')?.errors?.['required']">Ce champ est requis.</span>
+      <span *ngIf="form.get('disponibleOc')?.errors?.['pattern']">Chiffres uniquement</span>
+    </p>
+  </div>
+
+  <!-- Montant Demande -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Montant Dotation Demandée <span class="text-red-600">*</span></label>
+    <input type="text" class="w-full border rounded px-3 py-2" formControlName="montantDemande" />
+    <p *ngIf="form.get('montantDemande')?.touched && form.get('montantDemande')?.invalid" class="text-red-600 text-sm mt-1">
+      <span *ngIf="form.get('montantDemande')?.errors?.['required']">Ce champ est requis.</span>
+      <span *ngIf="form.get('montantDemande')?.errors?.['min']">Valeur minimale : 1.</span>
+      <span *ngIf="form.get('montantDemande')?.errors?.['pattern']">Chiffres uniquement</span>
+    </p>
+  </div>
+
+  <!-- Num Ticket -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de ticket <span class="text-red-600">*</span></label>
+    <input class="w-full border rounded px-3 py-2" formControlName="numTicketOc" />
+    <p *ngIf="form.get('numTicketOc')?.touched && form.get('numTicketOc')?.invalid" class="text-red-600 text-sm mt-1">
+      <span *ngIf="form.get('numTicketOc')?.errors?.['required']">Ce champ est requis.</span>
+      <span *ngIf="form.get('numTicketOc')?.errors?.['pattern']">Doit être alphanumérique (A-Z, a-z, 0-9).</span>
+    </p>
+  </div>
+
+  <!-- pass upload -->
+<div class="col-span-full">
+  <label class="block text-sm font-medium text-gray-700 mb-1">
+    Upload Passport <span class="text-red-600">*</span>
+  </label>
+
+  <div class="mt-1">
+    <label
+      for="conjointPassportUpload"
+      class="flex items-center justify-center w-10 h-10 bg-teal-600 hover:bg-teal-700 text-white cursor-pointer"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M16 12l-4-4m0 0l-4 4m4-4v12" />
+      </svg>
+    </label>
+
+    <input
+      type="file"
+      id="conjointPassportUpload"
+      (change)="onFileSelected($event)"
+      class="hidden"
+    />
+     <span *ngIf="selectedFileName" class="text-sm text-gray-700">{{ selectedFileName }}</span>
+  </div>
+</div>
+
+
+</form>

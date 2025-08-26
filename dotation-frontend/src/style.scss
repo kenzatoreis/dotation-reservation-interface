@@ -1,0 +1,39 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+@use 'sass:color';
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// Define custom palettes using Tailwind colors
+$primary-palette: mat.define-palette((
+  50: #ecfdf5,
+  100: #d1fae5,
+  200: #a7f3d0,
+  300: #6ee7b7,
+  400: #34d399,
+  500: #10b981,
+  600: #059669,
+  700: #047857,
+  800: #065f46,
+  900: #064e3b,
+  contrast: (
+    500: white
+  )
+));
+
+$accent-palette: mat.define-palette(mat.$indigo-palette);
+$warn-palette: mat.define-palette(mat.$red-palette);
+
+// Define the theme
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $primary-palette,
+    accent: $accent-palette,
+    warn: $warn-palette,
+  )
+));
+
+// Apply it
+@include mat.all-component-themes($my-theme);
